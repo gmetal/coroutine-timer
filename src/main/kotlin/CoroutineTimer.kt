@@ -11,6 +11,7 @@ class CoroutineTimer(
     /**
      * Starts the execution of the timer
      */
+    @Synchronized
     fun start() {
         if (isRunning()) {
             return
