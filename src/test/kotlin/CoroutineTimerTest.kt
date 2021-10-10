@@ -2,7 +2,9 @@ import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Timeout
 import java.lang.Thread.sleep
+import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 
 class CoroutineTimerTest {
@@ -34,6 +36,7 @@ class CoroutineTimerTest {
         verify { mockTimerAction wasNot called }
     }
 
+    @Timeout(3500, unit = TimeUnit.MILLISECONDS)
     @Test
     fun without_repeat_calling_start_will_execute_the_timer_action_once() {
         val testCoroutineTimer = CoroutineTimer(2000, false, timerAction = mockTimerAction)
@@ -48,6 +51,7 @@ class CoroutineTimerTest {
         verify { mockTimerAction.invoke() }
     }
 
+    @Timeout(3500, unit = TimeUnit.MILLISECONDS)
     @Test
     fun without_repeat_calling_stop_will_stop_the_timer_without_executing_the_timer_action() {
         val testCoroutineTimer = CoroutineTimer(2000, false, timerAction = mockTimerAction)
